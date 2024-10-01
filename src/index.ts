@@ -15,30 +15,31 @@ app.get('/build', (c) => {
 app.post('/build', async (c) => {
   console.log('POST /build');
 
+  const body = await c.req.parseBody();
+
   // get the key parameter and check if it matches the secret (process.env.TYPST_SECRET)
-  const key = c.req.query('key');
+  const key = c.req.query('key') || body['key'] as string || '';
   if (key !== process.env.TYPST_SECRET) {
     console.log(key, process.env.TYPST_SECRET);
     return c.body('Invalid key', 401);
   }
 
   // get the entry file name and check if it is a typst file
-  const entryfile = c.req.query('entryfile') || 'main.typ';
+  const entryfile = c.req.query('entryfile') || body['entryfile'] as string || 'main.typ';
   if (!entryfile.endsWith('.typ')) {
     return c.body('Invalid entry filename', 400);
   }
 
   // get the output file name and check if it is a pdf file
-  const outputfile = c.req.query('outputfile') || 'main.pdf';
+  const outputfile = c.req.query('outputfile') || body['outputfile'] as string || 'main.pdf';
   if (!outputfile.endsWith('.pdf')) {
     return c.body('Invalid output filename', 400);
   }
 
   // get the root argument and check if it is a string
-  const rootArg = c.req.query('root') || '';
+  const rootArg = c.req.query('root') || body['root'] as string || '';
 
   // get the zip file
-  const body = await c.req.parseBody();
   const zip = body['upload'] as File;
   if (zip.type !== 'application/zip') {
     return c.body('Invalid file type', 400);
