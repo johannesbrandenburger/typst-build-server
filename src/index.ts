@@ -15,11 +15,18 @@ app.get('/build', (c) => {
 app.post('/build', async (c) => {
   console.log('POST /build');
 
+  // get the key= parameter and check if it matches the secret (process.env.TYPST_SECRET)
+  const key = c.req.query('key');
+  if (key !== process.env.TYPST_SECRET) {
+    console.log(key, process.env.TYPST_SECRET);
+    return c.body('Invalid key', 401);
+  }
+
   // get the zip file
   const body = await c.req.parseBody();
   const zip = body['upload'] as File;
   if (zip.type !== 'application/zip') {
-    return c.text('Invalid file type');
+    return c.body('Invalid file type', 400);
   }
 
   // safe the file to disk
@@ -42,6 +49,7 @@ app.post('/build', async (c) => {
   // read the compiled pdf and clear the temp folder
   const output = await Bun.file(outputPath).arrayBuffer();
   await $`rm -rf ${extractPath}`;
+  await $`rm ${zipPath}`;
 
   // return the compiled pdf
   return c.body(output, 200, {

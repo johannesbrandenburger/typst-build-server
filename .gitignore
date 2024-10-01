@@ -3,3 +3,4 @@ dist/
 in/
 in.zip
 .DS_Store
+.env
