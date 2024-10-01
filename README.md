@@ -13,12 +13,12 @@ This project is a server that compiles a Typst project into a PDF. It accepts a 
 
 This endpoint accepts a ZIP file containing the Typst project, extracts it, compiles the project, and returns the compiled PDF. The request must include an API key and specify the entry and output file names.
 
-#### Request Parameters:
+#### Request Parameters (URL or Form Data):
 
 - `key` (required): A query parameter that must match the secret key (`TYPST_SECRET`) stored in environment variables. This is used for authentication.
 - `entryfile` (optional): The name of the entry Typst file within the ZIP. Defaults to `main.typ`. Must end with `.typ`.
 - `outputfile` (optional): The name of the compiled PDF file. Defaults to `main.pdf`. Must end with `.pdf`.
-- `root` (optional): Specifies a root directory if needed for compilation. This is useful when setting up file paths within the Typst project.
+- `root` (optional): Gets passed to Typst as the root directory for the project `typst compile ... --root <root>`.
 
 #### Request Body:
 
