@@ -7,6 +7,10 @@ app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
+app.get('/build', (c) => {
+  return c.text('Please use POST method to upload a ZIP file')
+})
+
 // this route gets a ZIP file, extracts it, compiles the typst project and returns the compiled pdf
 app.post('/build', async (c) => {
   console.log('POST /build');
