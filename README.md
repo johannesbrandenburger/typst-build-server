@@ -77,7 +77,9 @@ In this example:
 3. Set up the environment variable `TYPST_SECRET` for authentication.
 4. Start the server:
    ```bash
-   bun run index.ts
+   bun run dev
+   # or
+   bun run start
    ```
 5. The server will be accessible at `http://localhost:3000`.
 
