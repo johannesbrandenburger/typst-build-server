@@ -38,9 +38,13 @@ This endpoint accepts a ZIP file containing the Typst project, extracts it, comp
 Here is an example of how to make a request to the `/build` endpoint using `curl`:
 
 ```bash
+# ZIP your Typst project
+zip -r example-project.zip example-project
+
+# Request to compile a Typst project
 curl -X POST http://localhost:3000/build \
   -H "Content-Type: multipart/form-data" \
-  -F "upload=@your-project.zip" \
+  -F "upload=@example-project.zip" \
   -F "entryfile=main.typ" \
   -F "outputfile=compiled.pdf" \
   -F "key=your_secret_key" \
@@ -49,7 +53,7 @@ curl -X POST http://localhost:3000/build \
 
 In this example:
 
-- `your-project.zip` is the ZIP file containing your Typst project.
+- `example-project.zip` is the ZIP file containing your Typst project.
 - `main.typ` is the entry file for the project.
 - `compiled.pdf` is the name of the generated PDF.
 - `your_secret_key` is the secret key for authentication.

@@ -1,6 +1,6 @@
 node_modules/
 dist/
-in/
-in.zip
 .DS_Store
 .env
+compiled.pdf
+example-project.zip
