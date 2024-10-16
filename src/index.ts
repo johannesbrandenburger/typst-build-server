@@ -4,7 +4,7 @@ import { $ } from 'bun'
 const app = new Hono()
 
 app.get('/', (c) => {
-  return c.text('Hello Hono!')
+  return c.text('Server is running... Please use POST "/build" to compile a typst project')
 })
 
 app.get('/build', (c) => {
