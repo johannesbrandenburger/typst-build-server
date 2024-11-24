@@ -53,7 +53,19 @@ app.post('/build', async (c) => {
   await $`mkdir -p ./temp`;
   const extractPath = `./temp/${Date.now()}`;
   await $`unzip ${zipPath} -d ${extractPath}`;
-  const projectPath = `${extractPath}/${zip.name.replace('.zip', '')}`;
+
+  // check if it has to be with the name of the zip file or not
+  let projectPath = `${extractPath}`;
+  let entryFile = await file(`${projectPath}/${entryfile}`).exists();
+  if (!entryFile) {
+    projectPath = `${extractPath}/${zip.name.replace('.zip', '')}`;
+  }
+
+  // if entryfile is still not found, return an error
+  entryFile = await file(`${projectPath}/${entryfile}`).exists();
+  if (!entryFile) {
+    return c.body('Entry file not found', 404);
+  }
 
   // typst compile path/to/source.typ path/to/output.pdf
   const sourcePath = `${projectPath}/${entryfile}`;
