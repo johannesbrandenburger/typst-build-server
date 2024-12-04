@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { $ } from 'bun'
+import { $, file } from 'bun'
 
 const app = new Hono()
 
